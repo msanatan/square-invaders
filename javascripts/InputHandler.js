@@ -122,6 +122,13 @@ Game.InputHandler.prototype.register = function(canvas) {
   });
 };
 
+Game.InputHandler.prototype.isDown = function(key) {
+  if (this.keysDown[this.KEY[key]]) {
+    return true;
+  }
+  return false;
+};
+
 Game.InputHandler.prototype.update = function() {
   var keys, keyDown;
   keys = Object.keys(this.keysDown);
