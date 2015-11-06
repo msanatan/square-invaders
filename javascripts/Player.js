@@ -3,7 +3,6 @@ var Game = Game || {};
 Game.Player = function(options) {
   'use strict';
   Game.Sprite.call(this, options);
-  console.log(options.x);
   this.colour = options.colour || '#AADDCC';
   this.xSpeed = options.xSpeed || 10;
   this.ySpeed = options.ySpeed || 10;
