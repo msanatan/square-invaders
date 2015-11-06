@@ -1,4 +1,5 @@
 #!/bin/bash
+rm -Rf build
 mkdir build
 # Use an array to preserve order, pretty darn important
 FILES=("javascripts/InputHandler.js" "javascripts/Engine.js" "javascripts/LaserShot.js" "javascripts/Sprite.js" "javascripts/Player.js" "javascripts/Enemy.js" "javascripts/Collision.js" "javascripts/SquareInvaders.js" "javascripts/init.js")
@@ -23,4 +24,5 @@ tr -d "\011\012\015" < index.html | cat > $HTML_FILE
 echo "Removing old script references"
 perl -i.bak -0777ne 's|<script.*?</script>||gms;print' $HTML_FILE
 sed -i ".bak" s/'<\/body>'/"<script type='application\/javascript' src='square-invaders.min.js'><\/script><\/body>"/ $HTML_FILE
+rm build/index.html.bak
 echo "Build complete :)"
