@@ -48,13 +48,13 @@ Game.Player.prototype.update = function(inputHandler) {
     this.dead = true;
   }
 
-  if(inputHandler.keysDown[inputHandler.KEY.UP]) {
+  if(inputHandler.isDown('UP') || inputHandler.isDown('W')) {
     this.move(0, -this.ySpeed, this.canvasWidth, this.canvasHeight);
-  } else if (inputHandler.keysDown[inputHandler.KEY.DOWN]) {
+  } else if (inputHandler.isDown('DOWN') || inputHandler.isDown('S')) {
     this.move(0, this.ySpeed, this.canvasWidth, this.canvasHeight);
-  } else if (inputHandler.keysDown[inputHandler.KEY.LEFT]) {
+  } else if (inputHandler.isDown('LEFT') || inputHandler.isDown('A')) {
     this.move(-this.xSpeed, 0, this.canvasWidth, this.canvasHeight);
-  } else if (inputHandler.keysDown[inputHandler.KEY.RIGHT]) {
+  } else if (inputHandler.isDown('RIGHT') || inputHandler.isDown('D')) {
     this.move(this.xSpeed, 0, this.canvasWidth, this.canvasHeight);
   }
 
