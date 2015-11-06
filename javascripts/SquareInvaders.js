@@ -29,7 +29,7 @@ Game.SquareInvaders.prototype.update = function(inputHandler) {
   };
 
   this.player.hit = false;
-  if (inputHandler.pressed && inputHandler.keysDown[inputHandler.KEY.ESC] && !this.player.dead) {
+  if (inputHandler.pressed && inputHandler.isDown('ESC') && !this.player.dead) {
     this.pause = !this.pause;
   }
 
