@@ -1,6 +1,7 @@
 var Game = Game || {};
 
 Game.getRandomInt = function(min, max) {
+  'use strict';
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
@@ -77,7 +78,7 @@ Game.BasicEnemy.prototype.update = function() {
   self = this;
   this.laserShots = this.laserShots.filter(function(ls) {
     ls.update();
-    return (ls.y - (5 * ls.height) < self.canvasHeight) && !ls.hit;
+    return (ls.y < self.canvasHeight) && !ls.hit;
   });
 };
 

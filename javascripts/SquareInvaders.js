@@ -25,7 +25,9 @@ Game.SquareInvaders.prototype.update = function(inputHandler) {
   'use strict';
   var enemyOptions = {
     x: Math.random() * this.width,
-    y: 0
+    y: 0,
+    canvasWidth: this.width,
+    canvasHeight: this.height
   };
 
   this.player.hit = false;
