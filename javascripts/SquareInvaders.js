@@ -43,7 +43,7 @@ Game.SquareInvaders.prototype.update = function(inputHandler) {
       return !enemy.dead;
     });
 
-    if (this.enemies.length <= 15 && this.spawnWait === 0) {
+    if (this.enemies.length <= 12 && this.spawnWait === 0) {
       if (this.player.score < 100) {
         this.enemies.push(new Game.BasicEnemy(enemyOptions));
       } else if (this.player.score >= 100 && this.player.score <= 250) {
