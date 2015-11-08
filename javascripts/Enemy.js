@@ -9,8 +9,8 @@ Game.getRandomInt = function(min, max) {
 Game.BasicEnemy = function(options) {
   'use strict';
   Game.Sprite.call(this, options);
-  this.xSpeed = 5;
-  this.ySpeed = Game.getRandomInt(1, 10);
+  this.xSpeed = 2;
+  this.ySpeed = Game.getRandomInt(1, 5);
   this.colour = options.colour || '#66FF33';
   this.health = 5;
 };
@@ -61,7 +61,7 @@ Game.BasicEnemy.prototype.update = function() {
       height: 7,
       x: this.x,
       y: this.y,
-      speed: 10,
+      speed: 6,
       colour: '#EE3366',
       damage: this.damage,
       direction: 'down'
@@ -99,8 +99,8 @@ Game.BasicEnemy.prototype.render = function(context) {
 Game.SolidEnemy = function(options) {
   'use strict';
   Game.BasicEnemy.call(this, options);
-  this.xSpeed = 8;
-  this.ySpeed = Game.getRandomInt(5, 10);
+  this.xSpeed = 4;
+  this.ySpeed = Game.getRandomInt(3, 6);
   this.colour = options.colour || '#66FF33';
   this.health = 10;
 };
@@ -132,7 +132,7 @@ Game.SolidEnemy.prototype.update = function() {
       height: 8,
       x: this.x,
       y: this.y,
-      speed: 10,
+      speed: 7,
       colour: '#EE3366',
       damage: this.damage,
       direction: 'down'
