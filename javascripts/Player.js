@@ -41,6 +41,17 @@ Game.Player.prototype.move = function(x, y, width, height) {
   }
 };
 
+Game.Player.prototype.reset = function(x, y) {
+  'use strict';
+  this.x = x;
+  this.y = y;
+  this.health = 100;
+  this.laserShots = [];
+  this.lastShot = 0;
+  this.score = 0;
+  this.dead = false;
+};
+
 Game.Player.prototype.update = function(inputHandler) {
   'use strict';
   var laserOptions, now, delta;

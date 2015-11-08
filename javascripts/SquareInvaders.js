@@ -22,15 +22,22 @@ Game.SquareInvaders = function(options) {
   this.lastSpawn = 0;
 };
 
+Game.SquareInvaders.prototype.reset = function() {
+  'use strict';
+  this.player.reset(this.width / 2, this.height - this.player.height);
+  this.enemies = [];
+  this.lastSpawn = 0;
+};
+
 Game.SquareInvaders.prototype.update = function(inputHandler) {
   'use strict';
   var enemyOptions, now, delta;
-  enemyOptions = {
-    x: Math.random() * this.width,
-    y: 0,
-    canvasWidth: this.width,
-    canvasHeight: this.height
-  };
+
+  if (this.player.dead) {
+    if (inputHandler.pressed && inputHandler.isDown('RTN')) {
+      this.reset();
+    }
+  }
 
   this.player.hit = false;
   if (inputHandler.pressed && inputHandler.isDown('ESC') && !this.player.dead) {
@@ -48,6 +55,12 @@ Game.SquareInvaders.prototype.update = function(inputHandler) {
     now = Date.now();
     delta = now - this.lastSpawn;
     if (this.enemies.length <= 12 && delta >= this.spawnWait) {
+      enemyOptions = {
+        x: Math.random() * this.width,
+        y: 0,
+        canvasWidth: this.width,
+        canvasHeight: this.height
+      };
       if (this.player.score < 100) {
         this.enemies.push(new Game.BasicEnemy(enemyOptions));
       } else if (this.player.score >= 100 && this.player.score <= 250) {
@@ -103,7 +116,7 @@ Game.SquareInvaders.prototype.render = function(context) {
 
   if (this.pause) {
     context.beginPath();
-    context.font = 'bold 120px Helvetica, Verdana, san-serif';
+    context.font = 'bold 120pt Helvetica, Verdana, sans-serif';
     context.fillStyle = '#FFDD88';
     textMeasure = context.measureText('Paused').width;
     context.fillText('Paused', (this.width / 2) - (textMeasure / 2), this.height / 2);
@@ -112,10 +125,17 @@ Game.SquareInvaders.prototype.render = function(context) {
 
   if (this.player.dead) {
     context.beginPath();
-    context.font = 'bold 120px Helvetica, Verdana, san-serif';
+    context.font = 'bold 120pt Helvetica, Verdana, sans-serif';
     context.fillStyle = '#FF4343';
     textMeasure = context.measureText('Game Over').width;
     context.fillText('Game Over', (this.width / 2) - (textMeasure / 2), this.height / 2);
+    context.closePath();
+
+    context.beginPath();
+    context.font = '80pt Helvetica, Verdana, sans-serif';
+    context.fillStyle = '#FFFFFF';
+    textMeasure = context.measureText('Try Again?').width;
+    context.fillText('Try Again?', (this.width / 2) - (textMeasure / 2), (this.height / 2) + 120);
     context.closePath();
   }
 
