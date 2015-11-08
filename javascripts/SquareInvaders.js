@@ -18,12 +18,14 @@ Game.SquareInvaders = function(options) {
   };
   this.player = new Game.Player(playerOptions);
   this.enemies = [];
-  this.spawnWait = 0;
+  this.spawnWait = 1000;
+  this.lastSpawn = 0;
 };
 
 Game.SquareInvaders.prototype.update = function(inputHandler) {
   'use strict';
-  var enemyOptions = {
+  var enemyOptions, now, delta;
+  enemyOptions = {
     x: Math.random() * this.width,
     y: 0,
     canvasWidth: this.width,
@@ -43,7 +45,9 @@ Game.SquareInvaders.prototype.update = function(inputHandler) {
       return !enemy.dead;
     });
 
-    if (this.enemies.length <= 12 && this.spawnWait === 0) {
+    now = Date.now();
+    delta = now - this.lastSpawn;
+    if (this.enemies.length <= 12 && delta >= this.spawnWait) {
       if (this.player.score < 100) {
         this.enemies.push(new Game.BasicEnemy(enemyOptions));
       } else if (this.player.score >= 100 && this.player.score <= 250) {
@@ -52,10 +56,7 @@ Game.SquareInvaders.prototype.update = function(inputHandler) {
         this.enemies.push(new Game.BasicEnemy(enemyOptions));
         this.enemies.push(new Game.SolidEnemy(enemyOptions));
       }
-      this.spawnWait = 50;
-    }
-    if (this.spawnWait > 0) {
-      this.spawnWait -= 1;
+      this.lastSpawn = now;
     }
   }
 };
