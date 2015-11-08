@@ -13,7 +13,7 @@ Game.Engine.prototype.init = function() {
   this.canvas.focus();
   this.ctx = this.canvas.getContext('2d');
   this.inputHandler = new Game.InputHandler();
-  this.inputHandler.register(this.canvas);
+  this.inputHandler.register();
 };
 
 Game.Engine.prototype.register = function(screen) {
