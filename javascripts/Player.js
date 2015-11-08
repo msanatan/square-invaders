@@ -7,6 +7,7 @@ Game.Player = function(options) {
   this.xSpeed = options.xSpeed || 10;
   this.ySpeed = options.ySpeed || 10;
   this.health = 100;
+  this.shotWait = 250;
 };
 Game.Player.prototype = Object.create(Game.Sprite.prototype);
 Game.Player.constructor = Game.Sprite;
@@ -42,7 +43,7 @@ Game.Player.prototype.move = function(x, y, width, height) {
 
 Game.Player.prototype.update = function(inputHandler) {
   'use strict';
-  var laserOptions;
+  var laserOptions, now, delta;
   if (this.health === 0) {
     this.dead = true;
   }
@@ -57,31 +58,21 @@ Game.Player.prototype.update = function(inputHandler) {
     this.move(this.xSpeed, 0, this.canvasWidth, this.canvasHeight);
   }
 
-  if (inputHandler.keysDown[inputHandler.KEY.SPACE] && this.shotWait === 0) {
+  now = Date.now();
+  delta = now - this.lastShot;
+  if (inputHandler.keysDown[inputHandler.KEY.SPACE] && delta >= this.shotWait) {
     laserOptions = {
       width: 7,
       height: 7,
       x: this.x,
       y: this.y,
-      speed: 15,
+      speed: 10,
       colour: '#EEDD88',
       damage: this.damage,
       direction: 'up'
     };
     this.laserShots.push(new Game.LaserShot(laserOptions));
-  }
-
-  // Wait 5 frames between every laser shot
-  if (this.shotWait === 0) {
-    this.shotWait = 10;
-  } else {
-    this.shotWait -= 1;
-  }
-
-  // If the user is not holding the spacebar then automatically reset the
-  // shot delay, so that spacebar presses won't be skipped
-  if (!inputHandler.keysDown[inputHandler.KEY.SPACE]) {
-    this.shotWait = 0;
+    this.lastShot = now;
   }
 
   // Update laser shot positions

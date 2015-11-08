@@ -13,6 +13,7 @@ Game.BasicEnemy = function(options) {
   this.ySpeed = Game.getRandomInt(1, 5);
   this.colour = options.colour || '#66FF33';
   this.health = 5;
+  this.shotWait = 1000;
 };
 Game.BasicEnemy.prototype = Object.create(Game.Sprite.prototype);
 Game.BasicEnemy.constructor = Game.Sprite;
@@ -38,7 +39,7 @@ Game.BasicEnemy.prototype.move = function(x, y, width, height) {
 
 Game.BasicEnemy.prototype.update = function() {
   'use strict';
-  var self;
+  var self, now, delta;
   if (this.health === 0) {
     this.dead = true;
   }
@@ -54,8 +55,10 @@ Game.BasicEnemy.prototype.update = function() {
 
   this.move(this.xSpeed, this.ySpeed, this.canvasWidth, this.canvasHeight);
 
+  now = Date.now();
+  delta = now - this.lastShot;
   // Shoot every few seconds
-  if (this.shotWait === 0) {
+  if (delta >= this.shotWait) {
     this.laserShots.push(new Game.LaserShot({
       width: 7,
       height: 7,
@@ -66,12 +69,7 @@ Game.BasicEnemy.prototype.update = function() {
       damage: this.damage,
       direction: 'down'
     }));
-  }
-
-  if (this.shotWait === 0) {
-    this.shotWait = 30;
-  } else {
-    this.shotWait -= 1;
+    this.lastShot = now;
   }
 
   // Update laser shot positions
@@ -103,13 +101,14 @@ Game.SolidEnemy = function(options) {
   this.ySpeed = Game.getRandomInt(3, 6);
   this.colour = options.colour || '#66FF33';
   this.health = 10;
+  this.shotWait = 500;
 };
 Game.SolidEnemy.prototype = Object.create(Game.BasicEnemy.prototype);
 Game.SolidEnemy.constructor = Game.BasicEnemy;
 
 Game.SolidEnemy.prototype.update = function() {
   'use strict';
-  var self;
+  var self, now, delta;
   if (this.health === 0) {
     this.dead = true;
   }
@@ -125,8 +124,10 @@ Game.SolidEnemy.prototype.update = function() {
 
   this.move(this.xSpeed, this.ySpeed, this.canvasWidth, this.canvasHeight);
 
+  now = Date.now();
+  delta = now - this.lastShot;
   // Shoot every few seconds
-  if (this.shotWait === 0) {
+  if (delta >= this.shotWait) {
     this.laserShots.push(new Game.LaserShot({
       width: 8,
       height: 8,
@@ -137,12 +138,7 @@ Game.SolidEnemy.prototype.update = function() {
       damage: this.damage,
       direction: 'down'
     }));
-  }
-
-  if (this.shotWait === 0) {
-    this.shotWait = 25;
-  } else {
-    this.shotWait -= 1;
+    this.lastShot = now;
   }
 
   // Update laser shot positions
